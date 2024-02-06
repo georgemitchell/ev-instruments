@@ -1,6 +1,6 @@
 #include "SwitecX25.h"
 
-//Define the pin connections
+// Define the pin connections for the rotary encoder
 #define BUTTON_PIN 2 // SW -> D2
 #define OUTPUT_A 3 // CLK -> D3
 #define OUTPUT_B 4 // DT-> D4
@@ -12,7 +12,6 @@ int counter = 0; //Define the count
 
 volatile bool buttonPushed = false;
 volatile bool aTriggered = false;
-volatile bool rotationProcessing = false;
 
 unsigned long timestamp;
 
