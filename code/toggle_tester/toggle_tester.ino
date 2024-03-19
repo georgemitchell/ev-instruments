@@ -1,7 +1,7 @@
 // Define the pin connections for the CAN 2515 module
-#define TOGGLE_PIN 2
+#define TOGGLE_PIN 8
 
-#define BOUNCE_THRESHOLD 100
+#define BOUNCE_THRESHOLD 10
 
 volatile bool toggled = false;
 
@@ -18,6 +18,7 @@ void setup() {
   while (!Serial);
   Serial.begin(9600);
 
+  pinMode(TOGGLE_PIN, INPUT_PULLUP);
   //attachInterrupt(digitalPinToInterrupt(TOGGLE_PIN), SwitchToggled, CHANGE);
 
 }
@@ -41,4 +42,6 @@ void UpdateState()
   }
 }
 
-
+void SwitchToggled() {
+  Serial.println("toggled!");
+}

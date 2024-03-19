@@ -79,21 +79,13 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   delay(1000);
+
   if(messageReceived) {
     messageReceived = false;
     uint8_t irq = recvBus.getInterrupts();
     if (irq) {
       if (recvBus.readMessage(&canMessageRecv) == MCP2515::ERROR_OK) {
-        if(canMessageRecv.can_id == RPM_CAN_ID) {
-          if(canMessageRecv.can_dlc < 8) {
-            Serial.println("Incorrect number of bytes in message");
-          } else {
-            sentRpm = word(canMessageRecv.data[5], canMessageRecv.data[4]);
-            Serial.print("CAN message received: ");
-            Serial.println(sentRpm);
-
-          }
-        }   
+        ReadRPM();
       }
     }
   }
@@ -115,3 +107,15 @@ void SendRPM() {
   Serial.println(rpm);
 }
 
+void ReadRPM() {
+  if(canMessageRecv.can_id == RPM_CAN_ID) {
+    if(canMessageRecv.can_dlc < 8) {
+      Serial.println("Incorrect number of bytes in message");
+    } else {
+      sentRpm = word(canMessageRecv.data[5], canMessageRecv.data[4]);
+      Serial.print("CAN message received: ");
+      Serial.println(sentRpm);
+
+    }
+  }   
+}
